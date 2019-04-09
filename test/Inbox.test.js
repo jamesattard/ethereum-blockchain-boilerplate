@@ -1,20 +1,55 @@
-const assert = require('assert');
-const ganache = require('ganache-cli');
-const Web3 = require('web3');
-const web3 = new Web3(ganache.provider());
+const assert = require("assert");
+const ganache = require("ganache-cli");
+const Web3 = require("web3");
+const { interface, bytecode } = require("../compile");
 
+const provider = ganache.provider();
+const web3 = new Web3(provider);
 
-let fetchedAccounts;
+let accounts;
+let inbox;
+
+// beforeEach(async () => {
+//   // Get a list of all accounts
+//   accounts = await web3.eth.getAccounts();
+
+//   // Use one of those accounts to deploy the contract
+//   inbox = await new web3.eth.Contract(JSON.parse(interface)).deploy({
+//     data: bytecode,
+//     arguments: ["Hi there!"]
+//   });
+
+//   // Send txn
+//   inbox.send(
+//     {
+//       from: accounts[0],
+//       gas: "1000000"
+//     },
+//     (error, result) => {
+//       console.log("error:", error);
+//       console.log("result:", result);
+//     }
+//   );
+// });
 
 beforeEach(async () => {
   // Get a list of all accounts
-  fetchedAccounts = await web3.eth.getAccounts()
+  accounts = await web3.eth.getAccounts();
 
   // Use one of those accounts to deploy the contract
+  inbox = await new web3.eth.Contract(JSON.parse(interface))
+    .deploy({
+      data: bytecode,
+      arguments: ["Hi there!"]
+    })
+    .send({
+      from: accounts[0],
+      gas: "1000000"
+    });
 });
 
-describe('Inbox', () => {
-  it('deploys a contract', () => {
-    console.log(fetchedAccounts)
+describe("Inbox", () => {
+  it("deploys a contract", () => {
+    console.log(inbox);
   });
-})
+});
