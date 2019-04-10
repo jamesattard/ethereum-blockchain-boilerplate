@@ -9,29 +9,6 @@ const web3 = new Web3(provider);
 let accounts;
 let inbox;
 
-// beforeEach(async () => {
-//   // Get a list of all accounts
-//   accounts = await web3.eth.getAccounts();
-
-//   // Use one of those accounts to deploy the contract
-//   inbox = await new web3.eth.Contract(JSON.parse(interface)).deploy({
-//     data: bytecode,
-//     arguments: ["Hi there!"]
-//   });
-
-//   // Send txn
-//   inbox.send(
-//     {
-//       from: accounts[0],
-//       gas: "1000000"
-//     },
-//     (error, result) => {
-//       console.log("error:", error);
-//       console.log("result:", result);
-//     }
-//   );
-// });
-
 beforeEach(async () => {
   // Get a list of all accounts
   accounts = await web3.eth.getAccounts();
